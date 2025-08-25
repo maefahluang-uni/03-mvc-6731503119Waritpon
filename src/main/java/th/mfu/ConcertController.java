@@ -37,7 +37,7 @@ public class ConcertController {
         List<Concert> concertList = new ArrayList<>(concerts.values());
         model.addAttribute("concerts", concertList);
         // TODO: return a template to list concerts
-        return "list-concerts";
+        return "list-concert";
     }
 
     @GetMapping("/add-concert")
@@ -51,9 +51,12 @@ public class ConcertController {
     @PostMapping("/concerts")
     public String saveConcert(@ModelAttribute Concert concert) {
         // TODO: add concert to list of concerts
+        concert.setId(nextId);
+        concerts.put(nextId, concert);
         // TODO: increment nextId
+        nextId++;
         // TODO: redirect to list concerts
-        return "";
+        return "redirect:/concerts";
     }
 
     @GetMapping("/delete-concert/{id}")
