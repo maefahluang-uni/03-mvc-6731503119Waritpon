@@ -9,7 +9,39 @@
     <h1>Concert List</h1>
     <a href="/add-concert/">Add Concert</a>
     <!-- TODO: show delete link for each concert -->
+      <a href="/delete-concert" onclick="return confirm('Delete ALL concerts?');">Delete All</a>
 
     <!-- TODO: Add list of concerts -->
+     <table border="1" cellpadding="6" cellspacing="0">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Performer</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- กรณีไม่มีข้อมูล -->
+            <tr th:if="${concerts == null or #lists.isEmpty(concerts)}">
+                <td colspan="6" style="text-align:center;">No concerts found</td>
+            </tr>
+
+            <!-- กรณีมีข้อมูล -->
+            <tr th:each="concert : ${concerts}">
+                <td th:text="${concert.id}"></td>
+                <td th:text="${concert.title}"></td>
+                <td th:text="${concert.performer}"></td>
+                <td th:text="${#dates.format(concert.date, 'yyyy-MM-dd')}"></td>
+                <td th:text="${concert.description}"></td>
+                <td>
+                    <a th:href="@{/delete-concert/{id}(id=${concert.id})}" 
+                       onclick="return confirm('Delete this concert?');">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>
